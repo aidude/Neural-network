@@ -7,14 +7,6 @@ import scipy as sp
 from sklearn import datasets
 import matplotlib.pyplot as plt 
 
-
-# generate a random distribution and plot it.
-
-np.random.seed(0)
-X, Y = datasets.make_moons(300, noise = 0.35)
-plt.scatter(X[:,0], X[:,1], s=40 , c=Y, cmap = plt.cm.Spectral)
-plt.show()
-
 # Training dataset, input and output layer dimension
 data_size = len(X)
 nn_input_dim , nn_output_dim = 2, 2
@@ -22,6 +14,8 @@ nn_input_dim , nn_output_dim = 2, 2
 # Gradient descent parameters
 epsilon = 0.05
 reg_lambda = 0.01
+
+
 
 # Calculate loss of the neural model
 def calculate_loss(model):
@@ -52,5 +46,31 @@ def predict(model, x):
 	output_scores = np.exp(z2)
 	probs = exp_scores / np.sum(output_scores, axis=1, keepdims=True)
     return np.argmax(probs, axis=1)
+
+def build_training_model(nn_hidden_dim, num_passes = 5000, print_loss = True):
+
+
+	np.random.seed(0)
+	W1 = np.random.randn(nn_input_dim, nn_hdim) / np.sqrt(nn_input_dim)
+    b1 = np.zeros((1, nn_hdim))
+    W2 = np.random.randn(nn_hdim, nn_output_dim) / np.sqrt(nn_hdim)
+    b2 = np.zeros((1, nn_output_dim))
+
+
+def main():
+    
+    # generate a random distribution and plot it.
+	np.random.seed(0)
+	X, Y = datasets.make_moons(300, noise = 0.35)
+	plt.scatter(X[:,0], X[:,1], s=40 , c=Y, cmap = plt.cm.Spectral)
+	plt.show()
+
+
+    model = build_training_model(X, Y, 3, print_loss=True)
+    visualize(X, Y, model)
+
+
+if __name__ == "__main__":
+    main()
 
 
