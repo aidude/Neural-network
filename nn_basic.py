@@ -146,7 +146,7 @@ def main():
 
 	# Train model
 	for X_chunk, y_chunk in batcherator:
-		model = build_training_model(X, Y, 50)
+		model = build_training_model(X_chunk, y_chunk, 50)
  
     # Now make predictions with trained model
     # y_predicted = model.predict(X_test)
