@@ -123,12 +123,12 @@ def main():
     
     # generate a random distribution and plot it.
 	np.random.seed(0)
-	X, Y = datasets.make_moons(300, noise = 0.2)
+	X, Y = datasets.make_moons(500, noise = 0.35)
 	plt.scatter(X[:,0], X[:,1], s=40 , c=Y, cmap = plt.cm.Spectral)
 	# plt.show()
 
 
-	model = build_training_model(X, Y, 6)
+	model = build_training_model(X, Y, 50)
 	draw_visualization(X, Y, model)
 
 
