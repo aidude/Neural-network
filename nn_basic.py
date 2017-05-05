@@ -119,16 +119,39 @@ def build_training_model(X, Y, nn_hidden_dim, num_passes = 25000, print_loss = T
 	return model
 
 
+
+def sample_minibatches(inputs,targets, chunksize, shuffle=True):
+    # Provide chunks one by one
+    
+    assert inputs.shape[0] == targets.shape[0]
+    if shuffle:
+        indices = np.arange(inputs.shape[0])
+        np.random.shuffle(indices)
+    for start_idx in range(0, inputs.shape[0] - chunksize + 1, chunksize):
+        if shuffle:
+            excerpt = indices[start_idx:start_idx + chunksize]
+        else:
+            excerpt = slice(start_idx, start_idx + chunksize)
+        yield inputs[excerpt], targets[excerpt]
+ 
+
 def main():
     
     # generate a random distribution and plot it.
 	np.random.seed(0)
-	X, Y = datasets.make_moons(500, noise = 0.35)
+	X, Y = datasets.make_moons(1000, noise = 0.25)
 	plt.scatter(X[:,0], X[:,1], s=40 , c=Y, cmap = plt.cm.Spectral)
-	# plt.show()
+	plt.show()
+	batcherator = sample_minibatches(X,Y,100)
 
+	# Train model
+	for X_chunk, y_chunk in batcherator:
+		model = build_training_model(X, Y, 50)
+ 
+    # Now make predictions with trained model
+    # y_predicted = model.predict(X_test)
 
-	model = build_training_model(X, Y, 50)
+	# model = build_training_model(X, Y, 50)
 	draw_visualization(X, Y, model)
 
 
